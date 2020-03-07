@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+      <div class="row">
+        <!-- Latest Posts -->
+        <main class="post blog-post col-lg-8"> 
+          <div class="container">
+            <div class="post-single">
+              <div class="post-thumbnail"><img src="{{ art_list.picture  }}" alt="..." class="img-fluid"></div>
+
+              <div class="post-details">
+                <div class="post-meta d-flex justify-content-between">
+                  <div class="category"><a href="#">Business</a><a href="#">Financial</a></div>
+                </div>
+                <h1>{{art_list.title }}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
+                <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
+                    <div class="avatar"><img src="/static/img/avatar-1.jpg" alt="..." class="img-fluid"></div>
+                    <div class="title"><span>Abin</span></div></a>
+                  <div class="d-flex align-items-center flex-wrap">       
+                    <div class="date"><i class="icon-clock"></i>{{art_list.create_time }}</div>
+                    <div class="views"><i class="icon-eye"></i>{{art_list.hits }}</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{art_list.comments }}</div>
+                  </div>
+                </div>
+                <div class="post-body">
+                  <p class="lead">{{ art_list.content }}</p>
+                  <p></p>
+                  <p> <img src="/static/img/featured-pic-3.jpeg" alt="..." class="img-fluid"></p>
+                  <h3></h3>
+                  <p></p>
+                  <blockquote class="blockquote">
+                    <p></p>
+                    <footer class="blockquote-footer">
+                      <cite title="Source Title"></cite>
+                    </footer>
+                  </blockquote>
+                  <p></p>
+                </div>
+                <div class="post-tags"><a href="#" class="tag">{{tag[1].name}}</a></div>
+                <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row"><a href="{{ url_for('bp.post',id = (art_list.aid - 1)) }}" class="prev-post text-left d-flex align-items-center">
+                    <div class="icon prev"><i class="fa fa-angle-left"></i></div>
+                    <div class="text"><strong class="text-primary">上一篇 </strong>
+                      <h6>{{ art_list_pre.title }}</h6>
+                    </div></a><a href="{{ url_for('bp.post',id =(art_list.aid + 1) ) }}" class="next-post text-right d-flex align-items-center justify-content-end">
+                    <div class="text"><strong class="text-primary">下一篇 </strong>
+                      <h6>{{ art_list_next.title }}</h6>
+                    </div>
+                    <div class="icon next"><i class="fa fa-angle-right">   </i></div></a></div>
+                <div class="post-comments">
+                  <header>
+                    <h3 class="h6">评论<span class="no-of-comments"></span></h3>
+                  </header>
+                {% for mark in marks %}
+                  <div class="comment">
+                    <div class="comment-header d-flex justify-content-between">
+                      <div class="user d-flex align-items-center">
+                        <div class="image"><img src="/static/img/user.svg" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="title"><strong>{{ mark[1].username }}</strong><span class="date">{{ mark[0].creat_time }}</span></div>
+                      </div>
+                    </div>
+                    <div class="comment-body">
+                      <p>{{ mark[0].content  }}</p>
+                    </div>
+                  </div>
+                {% endfor %}
+
+
+                </div>
+                <div class="add-comment">
+                  <header>
+                    <h3 class="h6">Leave a reply</h3>
+                  </header>
+                  <form action="#" class="commenting-form">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <input type="text" name="username" id="username" placeholder="Name" class="form-control">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <input type="email" name="username" id="useremail" placeholder="Email Address (will not be published)" class="form-control">
+                      </div>
+                      <div class="form-group col-md-12">
+                        <textarea name="usercomment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
+                      </div>
+                      <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary">Submit Comment</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <aside class="col-lg-4">
+          <!-- Widget [Search Bar Widget]-->
+          <div class="widget search">
+            <header>
+              <h3 class="h6">Search the blog</h3>
+            </header>
+            <form action="#" class="search-form">
+              <div class="form-group">
+                <input type="search" placeholder="What are you looking for?">
+                <button type="submit" class="submit"><i class="icon-search"></i></button>
+              </div>
+            </form>
+          </div>
+             <!-- Widget [Latest Posts Widget]        -->
+          <div class="widget latest-posts">
+            <header>
+              <h3 class="h6">最近三文</h3>
+            </header>
+            <div class="blog-posts">
+                {% for i in three_article %}
+                <a href="{{ url_for('bp.post',id = i.aid) }}">
+                <div class="item d-flex align-items-center">
+                  <div class="image"><img src="{{ i.picture }}" alt="..." class="img-fluid"></div>
+                  <div class="title"><strong>{{ i.title }}</strong>
+                    <div class="d-flex align-items-center">
+                      <div class="views"><i class="icon-eye"></i>{{ i.hits }}</div>
+                      <div class="comments"><i class="icon-comment"></i>{{ i.comments }}</div>
+                    </div>
+                  </div>
+                </div></a>
+                {% endfor %}
+            </div>
+          </div>
+
+
+          <!-- Widget [Categories Widget]-->
+          <div class="widget categories">
+            <header>
+              <h3 class="h6">分类</h3>
+            </header>
+
+            {% for i in categories %}
+            <div class="item d-flex justify-content-between"><a href="{{ url_for('bp.bloge',cid=i.cid) }}">{{ i.name }}</a><span>{{ i.num }}</span></div>
+            {% endfor %}
+
+          </div>
+          <!-- Widget [Tags Cloud Widget]-->
+          <div class="widget tags">
+            <header>
+              <h3 class="h6">标签</h3>
+            </header>
+            <ul class="list-inline">
+                {% for i in tags %}
+              <li class="list-inline-item"><a href="#" class="tag">#{{ i.name }}</a></li>
+                {% endfor %}
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+{% endblock %}

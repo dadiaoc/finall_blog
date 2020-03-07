@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+
+      <div class="row">
+        <!-- Latest Posts -->
+
+        <main class="posts-listing col-lg-8">
+
+          <div class="container">
+
+
+            <div class="row">
+                {% for art in paginate.items %}
+              <!-- post             -->
+              <div class="post col-xl-6">
+                <div class="post-thumbnail"><a href="{{ url_for('bp.post',id = art[0].aid) }}"><img src="{{ art[0].picture }}" alt="..." class="img-fluid"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    <div class="date meta-last">{{ art[0].create_time }}</div>
+                    <div class="category"><a href="#">Business</a></div>
+                  </div><a href="post.html">
+                    <h3 class="h4">{{ art[0].title }}</h3></a>
+                  <p class="text-muted">{{ art[0].content }}</p>
+                  <div class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="/static/img/001.jpg" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>abin</span></div></a>
+                    <div class="date"><i class="icon-clock"></i>{{ art[0].create_time }}</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{ art[0].hits }}</div>
+                  </div>
+                </div>
+              </div>
+                {% endfor %}
+                    <!-- post -->
+              <div class="post col-xl-6">
+
+            </div>
+
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-template d-flex justify-content-center">
+                {% for current in paginate.iter_pages() %}
+                <li class="page-item"><a href="{{ url_for("bp.bloge",cid =1 , page = current) }}" class="page-link active">{{ current }}</a></li>
+                {% endfor %}
+              </ul>
+            </nav>
+          </div>
+
+{#{% endfor %}#}
+
+
+
+
+        </main>
+        <aside class="col-lg-4">
+          <!-- Widget [Search Bar Widget]-->
+          <div class="widget search">
+            <header>
+              <h3 class="h6">Search the blog</h3>
+            </header>
+            <form action="#" class="search-form">
+              <div class="form-group">
+                <input type="search" placeholder="What are you looking for?">
+                <button type="submit" class="submit"><i class="icon-search"></i></button>
+              </div>
+            </form>
+          </div>
+          <!-- Widget [Latest Posts Widget]        -->
+          <div class="widget latest-posts">
+            <header>
+              <h3 class="h6">最近三文</h3>
+            </header>
+            <div class="blog-posts">
+                {% for art in three_article %}
+                <a href="{{ url_for('bp.post',id = art.aid)}}">
+                <div class="item d-flex align-items-center">
+                  <div class="image"><img src="{{ art.picture }}" alt="..." class="img-fluid"></div>
+                  <div class="title"><strong>{{ art.title }}</strong>
+                    <div class="d-flex align-items-center">
+                      <div class="views"><i class="icon-eye"></i>{{ art.hits }}</div>
+                      <div class="comments"><i class="icon-comment"></i>{{ art.comments }}</div>
+                    </div>
+                  </div>
+                </div></a>
+                {% endfor %}
+            </div>
+          </div>
+          <!-- Widget [Categories Widget]-->
+          <div class="widget categories">
+            <header>
+              <h3 class="h6">分类</h3>
+            </header>
+            {% for i in categories %}
+            <div class="item d-flex justify-content-between"><a href="{{ url_for('bp.bloge',cid=i.cid) }}">{{ i.name }}</a><span>{{ i.num }}</span></div>
+            {% endfor %}
+          </div>
+          <!-- Widget [Tags Cloud Widget]-->
+          <div class="widget tags">
+            <header>
+              <h3 class="h6">标签</h3>
+            </header>
+            <ul class="list-inline">
+                {% for i in tags %}
+              <li class="list-inline-item"><a href="#" class="tag">#{{ i.name }}</a></li>
+                {% endfor %}
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+{% endblock %}

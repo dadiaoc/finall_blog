@@ -1,0 +1,2 @@
+INSERT INTO `tag` VALUES (1, 'DNF', 1);
+INSERT INTO `tag` VALUES (2, 'LOL', 2);
